@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D 3-Layer Cake with Candles</title>
+  <style>
+    body {
+      background: #fdf0f0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .cake-container {
+      perspective: 1000px;
+    }
+
+    .cake {
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      cursor: pointer;
+    }
+
+    .cake:hover {
+      transform: rotateX(10deg) rotateY(15deg);
+    }
+
+    .layer {
+      border-radius: 10px;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .layer1 {
+      width: 200px;
+      height: 60px;
+      background: #e57373;
+      margin-top: 0;
+    }
+
+    .layer2 {
+      width: 140px;
+      height: 50px;
+      background: #f06292;
+      margin-top: -10px;
+    }
+
+    .layer3 {
+      width: 90px;
+      height: 40px;
+      background: #ba68c8;
+      margin-top: -10px;
+    }
+
+    .candles {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      width: 0;
+      height: 0;
+    }
+
+    .candle {
+      position: absolute;
+      width: 6px;
+      height: 20px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .flame {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      width: 6px;
+      height: 10px;
+      background: orange;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: flicker 1s infinite ease-in-out;
+    }
+
+    @keyframes flicker {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(-50%) scale(1.2);
+        opacity: 0.8;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cake-container">
+    <div class="cake">
+      <div class="layer layer1"></div>
+      <div class="layer layer2"></div>
+      <div class="layer layer3">
+        <div class="candles">
+          <!-- Generate 12 candles around the top layer in a circle -->
+          <script>
+            const candlesContainer = document.currentScript.parentNode;
+            const count = 12;
+            const radius = 40;
+            for (let i = 0; i < count; i++) {
+              const angle = (i / count) * 2 * Math.PI;
+              const x = radius * Math.cos(angle);
+              const y = radius * Math.sin(angle);
+              const candle = document.createElement('div');
+              candle.className = 'candle';
+              candle.style.left = `${x}px`;
+              candle.style.top = `${y}px`;
+              const flame = document.createElement('div');
+              flame.className = 'flame';
+              candle.appendChild(flame);
+              candlesContainer.appendChild(candle);
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
